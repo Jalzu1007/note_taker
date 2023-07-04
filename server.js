@@ -1,42 +1,51 @@
+// Im port module dependencies
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const uuid = require('uuid');
-
 const app = express();
+
+// Set the port for the server
 const PORT = process.env.PORT || 3001;
 
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+// Parse JSON data in the request body
 app.use(express.json());
+//Parse URL-encoded data in the request body
 app.use(express.urlencoded({ extended: true }));
-
+// Path to the JSON database file
 const dbFilePath = path.join(__dirname, 'db', 'db.json');
 
-// Read data from db.json
+// Function to read data from the database file
 function readDataFromFile() {
   const data = fs.readFileSync(dbFilePath, 'utf-8');
   return JSON.parse(data);
 }
 
-// Write data to db.json
+// Function to write data to the database file
 function writeDataToFile(data) {
   fs.writeFileSync(dbFilePath, JSON.stringify(data, null, 2));
 }
 
+// Route handler for the '/notes' GET request
 app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'notes.html'));
 });
 
+// Route handler for the root '/' GET request
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Route handler for the '/api/notes' GET request
 app.get('/api/notes', (req, res) => {
   const noteData = readDataFromFile();
   console.log('GET /api/notes - noteData:', noteData);
   res.json(noteData);
 });
 
+// Route handler for the '/api/notes' POST request
 app.post('/api/notes', (req, res) => {
   const { title, text } = req.body;
   if (title && text) {
@@ -61,6 +70,7 @@ app.post('/api/notes', (req, res) => {
   }
 });
 
+// Route handler for the '/api/notes/:id' DELETE request
 app.delete('/api/notes/:id', (req, res) => {
   const noteId = req.params.id;
   const noteData = readDataFromFile();
@@ -75,6 +85,7 @@ app.delete('/api/notes/:id', (req, res) => {
   res.status(200).json(response);
 });
 
+// Open PORT server 
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);
 });
