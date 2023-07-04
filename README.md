@@ -41,10 +41,11 @@ https://github.com/Jalzu1007/note_taker.git
 
 Heroku Deployed site:
 
+https://note-taker-jalzu1007-71cdf2740b6d.herokuapp.com/
 
 Walk-through video of the Note Taker Application:
 
-[![note_taker](https://img.youtube.com/vi/O1uV7wjY8WI/0.jpg)](https://www.youtube.com/watch?v=O1uV7wjY8WI)
+[![note_taker](https://img.youtube.com/vi/97p-g2GcSyQ/0.jpg)](https://www.youtube.com/watch?v=97p-g2GcSyQ)
 
 ## Credits
 
